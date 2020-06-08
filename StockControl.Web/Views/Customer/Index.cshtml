@@ -1,0 +1,92 @@
+﻿@model IEnumerable<StockControl.Data.Entities.Customer>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="white-box">
+            <h3 class="box-title m-b-0">Müşteriler</h3>
+            <p class="text-muted m-b-30">
+                <div class="row">
+               
+                        <div class="col-lg-2 ">
+                            <a href="@Url.Action("Create", "Customer")" class="btn btn-block btn-success ">Yeni Ekle</a>
+                        </div>
+                    </div>
+            </p>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.Label("Müşteri Adı Soyadı", htmlAttributes: new { @class = "control-label" })<br />
+                    </th>
+                    <th>
+                        @Html.Label("Müşteri Kodu", htmlAttributes: new { @class = "control-label" })<br />
+                    </th>
+                    <th>
+                        @Html.Label("Vergi No", htmlAttributes: new { @class = "control-label" })<br />
+                    </th>
+                    <th>
+                        @Html.Label("Vergi Dairesi", htmlAttributes: new { @class = "control-label" })<br />
+                    </th>
+                    <th>
+                        @Html.Label("Telefon No", htmlAttributes: new { @class = "control-label" })<br />
+                    </th>
+                    <th>
+                        @Html.Label("E-mail", htmlAttributes: new { @class = "control-label" })<br />
+                    </th>
+                    <th>
+                        @Html.Label("Yetkili ", htmlAttributes: new { @class = "control-label" })<br />
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TaxNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TaxName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Phone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AdminName)
+                        </td>
+                        <td>
+                        
+
+                            <div class="col-xl-6 ">
+                                <a href="@Url.Action("NewOrder", "Order" , new { id= item.Id })" class="btn btn-block btn-success">Sipariş Ver</a>
+                                <a href="@Url.Action("Update", "Customer",  new { id = item.Id })" class="btn btn-block btn-success">Güncelle</a>
+                                <a href="@Url.Action("Delete", "Customer",  new { id = item.Id })" class="btn" style="background-color: red; color: white;">Sil</a>
+
+                            </div>
+   
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <link href="~/Content/Css/view.css" rel="stylesheet" />
+    <script src="~/Scripts/customer.js"></script>
+}

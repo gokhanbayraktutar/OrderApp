@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/Content/Icons/favicon.png">
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Css/style.css" rel="stylesheet" />
+    <link href="~/Content/Css/blue.css" rel="stylesheet" />
+    <link href="~/Content/Css/sweetalert2.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="preloader">
+        <div class="cssload-speeding-wheel"></div>
+    </div>
+    <div id="wrapper">
+        <nav class="navbar navbar-light bg-success navbar-static-top">
+            <div class="container">
+                <div class="navbar-header-color">
+                    <h3><b><a style="color: white; margin-left: 450px;" href="@Url.Action("Index","Order")">Stok Otomasyonu</a></b></h3>
+                </div>
+            </div>
+        </nav>
+
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav navbar-collapse slimscrollsidebar">
+                <ul class="nav" id="side-menu">
+
+                    <li>
+                        <a href="#" class="waves-effect">
+                            <span class="glyphicon glyphicon-shopping-cart"></span>
+                            <span class="hide-menu">
+                                &nbsp; Sipariş İşlemleri<span class="fa arrow"></span>
+                            </span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="@Url.Action("NewOrder","Order")">Sipariş Ekranı</a></li>
+                            <li><a href="@Url.Action("Index","Order")">Sipariş Kayıtları</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="@Url.Action("Index", "Stock")" class="waves-effect">
+                            <span class="glyphicon glyphicon-tasks"></span>
+                            <span class="hide-menu">
+                                &nbsp; Stok
+                            </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="@Url.Action("Index", "Customer")" class="waves-effect">
+                            <span class="glyphicon glyphicon-user"></span>
+                            <span class="hide-menu">
+                                &nbsp; Müşteriler
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                @RenderBody()
+                <footer class="footer text-center"><b> 2019 &copy; Tüm Hakları Saklıdır - Gökhan BAYRAKTUTAR - Stok Otomasyon </b></footer>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Scripts/jquery-1.9.1.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <!-- Menu Plugin JavaScript -->
+    <script src="~/Scripts/sidebar-nav.min.js"></script>
+    <!--slimscroll JavaScript -->
+    <script src="~/Scripts/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="~/Scripts/waves.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="~/Scripts/custom.js"></script>
+    <!--Style Switcher -->
+    <script src="~/Scripts/jQuery.style.switcher.js"></script>
+    <!-- Sweet Alert -->
+    <script src="~/Scripts/sweetalert2.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+

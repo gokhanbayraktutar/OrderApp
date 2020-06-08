@@ -1,0 +1,83 @@
+﻿@model IEnumerable<StockControl.Data.Entities.Stock>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="white-box">
+            <h3 class="box-title m-b-0">Ürünler</h3>
+            <p class="text-muted m-b-30">
+                <div class="row">
+                    <div class="col-lg-2 ">
+                        <a href="@Url.Action("Create", "Stock")" class="btn btn-block btn-success">Yeni Ekle</a>
+                    </div>
+                </div>
+            </p>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.Label("Stok Adı", htmlAttributes: new { @class = "control-label" })<br />
+                    </th>
+                    <th>
+                        @Html.Label("Stok Kodu", htmlAttributes: new { @class = "control-label" })<br />
+                    </th>
+                    <th>
+                        @Html.Label("Stok Adet", htmlAttributes: new { @class = "control-label" })<br />
+                    </th>
+                    <th>
+                        @Html.Label("Birim Fiyat", htmlAttributes: new { @class = "control-label" })<br />
+                    </th>
+                    <th>
+                        @Html.Label("İskonto Oranı(%)", htmlAttributes: new { @class = "control-label" })<br />
+                    </th>
+                    <th>
+                        @Html.Label("Vergi Oranı(%)", htmlAttributes: new { @class = "control-label" })<br />
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StockName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StockCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Count)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)₺
+                        </td>
+                        <td>
+                            <b>% </b>@Html.DisplayFor(modelItem => item.Discount)
+                        </td>
+                        <td>
+                            <b>% </b>@Html.DisplayFor(modelItem => item.TaxRate)
+                        </td>
+                        <td>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-6">
+                                <a href="@Url.Action("Update", "Stock",  new { id = item.Id })" class="btn btn-block btn-success">Güncelle</a>
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
+                                <a href="@Url.Action("Delete", "Stock",  new { id = item.Id })" class="btn" style="background-color: red; color: white;">Sil</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <link href="~/Content/Css/view.css" rel="stylesheet" />
+    <script src="~/Scripts/customer.js"></script>
+}
+

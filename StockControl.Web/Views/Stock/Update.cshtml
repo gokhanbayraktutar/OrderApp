@@ -1,0 +1,75 @@
+﻿@model StockControl.Data.Entities.Stock
+
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-wrapper collapse in" aria-expanded="true">
+                <div class="panel-body">
+                    <form id="veri" method="post">
+                        <div class="form-horizontal">
+                            <h3 class="box-title">Stok Güncelle</h3>
+                            <hr>
+
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    @Html.Label("Stok Adı", htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.StockName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.StockName, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-md-5">
+                                    @Html.Label("Stok Kodu", htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.StockCode, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.StockCode, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    @Html.Label("Stok Adet", htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.Count, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Count, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-md-5">
+                                    @Html.Label("Birim Fiyat(₺)", htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    @Html.Label("İskonto Oranı(%)", htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-md-5">
+                                    @Html.Label("Vergi Oranı(%)", htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.TaxRate, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.TaxRate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <div class="col-md-5 text-right">
+                                    <button type="submit" class="btn btn-success btn-lg"> <i class="fa fa-check"></i> Kaydet</button>
+                                    <a href="@Url.Action("Index","Customer")" class="btn btn-default btn-lg">İptal</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>                      
+
+

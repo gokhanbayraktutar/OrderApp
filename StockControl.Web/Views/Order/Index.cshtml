@@ -1,0 +1,86 @@
+﻿@model IEnumerable<StockControl.Data.Entities.Order>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="white-box">
+            <h3 class="box-title m-b-0">Sipariş Kayıtları</h3>
+            <p class="text-muted m-b-30">
+                <div class="row">
+
+                    <table class="table">
+                        <tr>
+                            <th>
+                                @Html.Label("Müşteri Adı Soyadı", htmlAttributes: new { @class = "control-label" })<br />
+                            </th>
+                            <th>
+                                @Html.Label(" Adet", htmlAttributes: new { @class = "control-label" })<br />
+                            </th>
+                            <th>
+                                @Html.Label("Stok Adı", htmlAttributes: new { @class = "control-label" })<br />
+                            </th>
+                            <th>
+                                @Html.Label("Sipariş Tarihi", htmlAttributes: new { @class = "control-label" })<br />
+                            </th>
+                            <th>
+                                @Html.Label(" Ürün Tutarı", htmlAttributes: new { @class = "control-label" })<br />
+                            </th>
+                            <th>
+                                @Html.Label("İskonto Tutarı", htmlAttributes: new { @class = "control-label" })<br />
+                            </th>
+                            <th>
+                                @Html.Label("Vergi Tutarı", htmlAttributes: new { @class = "control-label" })<br />
+                            </th>
+                            <th>
+                                @Html.Label("Toplam Tutar", htmlAttributes: new { @class = "control-label" })<br />
+                            </th>
+
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Customer.CustomerName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Count)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Stock.StockName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TotalStockPrice)₺
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TotalDiscount)₺
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TotalTaxPrice)₺
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TotalPrice)₺
+                                </td>
+
+                            </tr>
+                        }
+
+                    </table>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <link href="~/Content/Css/view.css" rel="stylesheet" />
+    <script src="~/Scripts/customer.js"></script>
+}
+

@@ -1,0 +1,79 @@
+﻿@model StockControl.Data.Entities.Customer
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-wrapper collapse in" aria-expanded="true">
+                <div class="panel-body">
+                        <form id="veri" method="post">
+                            <div class="form-horizontal">
+                                <h3 class="box-title">Müşteri Ekle</h3>
+                                <hr>
+
+                                <div class="form-group">
+                                    <div class="col-md-5">
+                                        @Html.Label("Müşteri Adı Soyadı", htmlAttributes: new { @class = "control-label" })<br />
+                                        @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control", placeholder = "Müşteri Adı Soyadı Giriniz" } })
+                                        @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger" })
+                                    </div>
+                                    
+                                    <div class="col-md-5">
+                                        @Html.Label("Müşteri Kodu", htmlAttributes: new { @class = "control-label" })
+                                        @Html.EditorFor(model => model.CustomerCode, new { htmlAttributes = new { @class = "form-control", placeholder = "Müşteri Kodu Giriniz" } })
+                                        @Html.ValidationMessageFor(model => model.CustomerCode, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-5">
+                                        @Html.Label("Vergi No", htmlAttributes: new { @class = "control-label" })
+                                        @Html.EditorFor(model => model.TaxNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Vergi Numarası Giriniz" } })
+                                        @Html.ValidationMessageFor(model => model.TaxNumber, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        @Html.Label("Vergi Dairesi", htmlAttributes: new { @class = "control-label" })
+                                        @Html.EditorFor(model => model.TaxName, new { htmlAttributes = new { @class = "form-control", placeholder = "Vergi Dairesi Giriniz" } })
+                                        @Html.ValidationMessageFor(model => model.TaxName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-5">
+                                        @Html.Label("Telefon No", htmlAttributes: new { @class = "control-label" })
+                                        @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "Telefon Numarası Giriniz" } })
+                                        @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        @Html.Label("E-mail", htmlAttributes: new { @class = "control-label" })
+                                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Mail Adresi Giriniz" } })
+                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-5">
+                                        @Html.Label("Yetkili ", htmlAttributes: new { @class = "control-label" })
+                                        @Html.EditorFor(model => model.AdminName, new { htmlAttributes = new { @class = "form-control", placeholder = "Yetkili Adı Giriniz" } })
+                                        @Html.ValidationMessageFor(model => model.AdminName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <div class="col-md-5 text-right">
+                                        <button type="submit" class="btn btn-success btn-lg"> <i class="fa fa-check"></i> Kaydet</button>
+                                        <a href="@Url.Action("Index","Customer")" class="btn btn-default btn-lg">İptal</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

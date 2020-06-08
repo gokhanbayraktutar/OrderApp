@@ -1,0 +1,173 @@
+﻿@model StockControl.Data.Entities.Order
+
+@{
+    ViewBag.Title = "NewOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-wrapper collapse in" aria-expanded="true">
+                <div class="panel-body">
+
+                    <form id="veri" method="post">
+                        <div class="form-horizontal">
+                            <h3 class="box-title">Sipariş Ver</h3>
+                            <hr>
+
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    @Html.Label("Müşteri Adı Soyadı", htmlAttributes: new { @class = "control-label" })
+                                    @Html.DropDownListFor(model => model.CustomerId, new SelectList(ViewBag.customers,
+                                "Value", "Text"), "Seçiniz",  new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Customer.CustomerName, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-md-4">
+                                    @Html.Label("Stok Adı", htmlAttributes: new { @class = "control-label" })
+                                    @Html.DropDownListFor(model => model.StockId, new SelectList(ViewBag.stocks,
+                                "Value", "Text"), "Seçiniz", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Stock.StockName, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-md-4">
+                                    @Html.Label("Stok Adet", htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.Count, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Count, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    @Html.Label("Birim Fiyat", htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.Stock.Price, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                                    @Html.ValidationMessageFor(model => model.Count, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    @Html.Label(" Ürün Tutarı", htmlAttributes: new { @class = "control-label" })<br />
+                                    @Html.EditorFor(model => model.TotalStockPrice, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                                    @Html.ValidationMessageFor(model => model.TotalStockPrice, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    @Html.Label("İskonto Tutarı", htmlAttributes: new { @class = "control-label" })<br />
+                                    @Html.EditorFor(model => model.TotalDiscount, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                                    @Html.ValidationMessageFor(model => model.TotalDiscount, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    @Html.Label("Vergi Tutarı", htmlAttributes: new { @class = "control-label" })<br />
+                                    @Html.EditorFor(model => model.TotalTaxPrice, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                                    @Html.ValidationMessageFor(model => model.TotalTaxPrice, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    @Html.Label("Toplam Tutar", htmlAttributes: new { @class = "control-label" })<br />
+                                    @Html.EditorFor(model => model.TotalPrice, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                                    @Html.ValidationMessageFor(model => model.TotalPrice, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            @Html.Hidden("StockCount")
+                            @Html.Hidden("Discount")
+                            @Html.Hidden("Price")
+                            @Html.Hidden("TaxRate")
+                            @Html.Hidden("Item")
+
+                            <div class="form-actions">
+                                <div class="col-md-5 text-right">
+                                    <button type="submit" class="btn btn-success btn-lg"> <i class="fa fa-check"></i> Sipariş Ver</button>
+                                    <a href="@Url.Action("Index","Order")" class="btn btn-default btn-lg">İptal</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>        
+        $("#veri").submit(function () {
+            if (!$("#CustomerId").val() || !$("#StockId").val() || !$("#Count").val()) {
+                swal("Lütfen gerekli alanları doldurunuz");
+                return false;
+            } else if (parseInt($("#StockCount").val()) == 0 && parseInt($("#Count").val()) > 0) {
+                swal("Bu ürün stokta yoktur.");
+                return false;
+            } else if (parseInt($("#Count").val()) > parseInt($("#StockCount").val())) {
+                swal("Bu üründen en fazla " + $("#StockCount").val() + " adet sipariş verebilirsiniz.");
+                return false;
+            }
+        });
+
+        $("#StockId").change(function () {
+            $.ajax({
+                type: "POST",
+                url: '/Stock/GetById',
+                data: {Id: $(this).val()},
+                dataType: "json",
+                success: function (response) {
+                    console.log(response)
+                    $("#Stock_Price").val(response.Price);
+                    $("#StockCount").val(response.Count);
+                    $("#Discount").val(response.Discount);
+                    $("#Price").val(response.Price);
+                    $("#TaxRate").val(response.TaxRate);
+                    if ($("#Count").val()) {
+                        Calculate();
+                    }
+
+                },
+                error: function () {
+                    alert("Bir hata oluştu");
+                }
+            });
+        });
+
+        $("#Count").change(function () {
+            if ($("#Stock_Price").val()) {
+                Calculate();
+            }
+        });
+
+        function Calculate() {
+            $("#TotalStockPrice").val(parseFloat($("#Stock_Price").val()) * parseFloat(($("#Count").val())));
+            $("#TotalDiscount").val((parseFloat($("#TotalStockPrice").val()) * parseFloat($("#Discount").val()) / 100).toFixed(2))
+            $('#Item').val(parseFloat($("#TotalStockPrice").val()) - (parseFloat($("#TotalDiscount").val())));
+            $('#TotalTaxPrice').val((parseFloat($("#Item").val()) * parseFloat($("#TaxRate").val()) / 100).toFixed(2));
+            $('#TotalPrice').val((parseFloat($("#TotalStockPrice").val()) - parseFloat($("#TotalDiscount").val()) + parseFloat($("#TotalTaxPrice").val())).toFixed(2))
+        }
+
+        if (parseInt('@ViewBag.StockError') == 0) {
+            swal("Bu ürün stokta yoktur.");
+            $("#StockId").trigger("change");
+        } else if ('@ViewBag.StockError') {
+            swal("Bu üründen en fazla " + '@ViewBag.StockError' + " adet sipariş verebilirsiniz.");
+            $("#StockId").trigger("change");
+        }
+
+        if ('@ViewBag.RequiredError') {
+            swal("Lütfen gerekli alanları doldurunuz.");
+            $("#StockId").trigger("change");
+        }
+
+        var url = $(location).attr('href');
+        var parts = url.split("/");
+        var last_part = parts[parts.length - 1];
+        $("#CustomerId").val(last_part);
+
+    </script>
+}
